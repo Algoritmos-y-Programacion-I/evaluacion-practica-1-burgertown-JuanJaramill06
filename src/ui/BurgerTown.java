@@ -10,7 +10,7 @@ public class BurgerTown {
 
     public static void main(String[] args) {
 
-        inicializarGlobales();
+        initializeGlobals();
         menu();
     }
 
@@ -100,10 +100,10 @@ public class BurgerTown {
     }
 
     /**
-     * Descripcion: El metodo calcularPrecioaverage calcula el precio averages de los plates vendidos en el dia
-     * pre: Los arreglos prices y units deben estar inicializados
-     * pos: Retorna el precio average 
-     * @return El numero de average
+     * Description: The calculatePriceaverage method calculates the price averages of the plates sold during the day.
+     * pre: The prices and units arrays must be initialized
+     * pos: Returns the price average 
+     * @return The number of average
      */
     public static double calcularPrecioaverage() {
         double priceTotal = 0;
@@ -118,10 +118,10 @@ public class BurgerTown {
     }
 
     /**
-     * Descripcion: El metodo calculateSalesTotals calcula las ventas totales hechas durante el dia 
-     * pre: Los arreglos prices y units deben estar inicializados
-     * pos: Retorna el total de ventas 
-     * @return El numero de salesTotals 
+     * Descripcion: The calculateSalesTotals method calculates the total sales made during the day. 
+     * pre: The prices and units arrays must be initialized
+     * pos: Returns total sales 
+     * @return The number of salesTotals 
      */
     public static double calculateSalesTotals() {
         double salesTotals = 0;
@@ -132,11 +132,11 @@ public class BurgerTown {
     }
 
     /**
-     * Descripcion: El metodo consultplatesAboutLimit calcula cuales units se han pasado por el limite establecido por el usuario
-     * pre: Los arreglos prices y units deben estar inicializados
-     * pos: Retorna el número de plates que superan el límite mínimo de ventas
-     * @param limit El minimo de ventas dadas por el limite
-     * @return El numero plates que superan el limite 
+     * Descripcion: The consultplatesAboutLimit method calculates which units have exceeded the limit set by the user.
+     * pre: The prices and units arrays must be initialized
+     * pos: Returns the number of plates exceeding the minimum sales limit
+     * @param limit Minimum sales given by the limit
+     * @return Number of plates exceeding the limit 
      */
     public static int consultplatesAboutLimit(double limite) {
         int counter = 0;
