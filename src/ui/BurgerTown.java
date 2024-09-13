@@ -5,8 +5,8 @@ import java.util.Scanner;
 public class BurgerTown {
 
     public static Scanner reader;
-    public static double[] precios;
-    public static int[] unidades;
+    public static double[] prices;
+    public static int[] units;
 
     public static void main(String[] args) {
 
@@ -14,59 +14,49 @@ public class BurgerTown {
         menu();
     }
 
-    /**
-     * Descripcion: Este metodo se encarga de iniciar las variables globales
-     * pre: El Scanner reader debe estar declarado
-     * pos: l Scanner reader queda inicializado
-    */
-    public static void inicializarGlobales() {
 
+    public static void initializeGlobals() {
         reader = new Scanner(System.in);
-
     }
 
-    /**
-     * Descripcion: Este metodo se encarga de desplegar el menu al usuario y mostrar los mensajes de resultado para cada funcionalidad
-     * pre: El Scanner reader debe estar inicializado
-     * pre: El arreglo precios debe estar inicializado
-    */
+
     public static void menu() {
 
-        System.out.println("Bienvenido a BurgerTown!");
+        System.out.println("Welcome to BurgerTown!");
 
-        establecerCantidadVendida();
+        setQuantitySold();
 
         boolean salir = false;
 
         do {
 
-            System.out.println("\nMenu Principal:");
-            System.out.println("1. Solicitar precios ($) y cantidades de cada plato vendido en el dia");
-            System.out.println("2. Calcular la cantidad total de platos vendidos en el dia");
-            System.out.println("3. Calcular el precio promedio de los platos vendidos en el dia");
-            System.out.println("4. Calcular las ventas totales (dinero recaudado) durante el dia");
-            System.out.println("5. Consultar el numero de platos que en el dia han superado un limite minimo de ventas");
-            System.out.println("6. Salir");
-            System.out.println("\nDigite la opcion a ejecutar");
+            System.out.println("\nMain Menu:");
+            System.out.println("1. Request prices ($) and quantities of each dish sold during the day”.");
+            System.out.println("2. Calculate the total amount of plates sold in a day");
+            System.out.println("3. Calculate the average price of the plates sold during the day.");
+            System.out.println("4. Calculate total sales (money collected) during the day");
+            System.out.println("5. Consult the number of plates that have exceeded a minimum sales limit during the day.");
+            System.out.println("6. Exit");
+            System.out.println("\nType the option to execute");
             int opcion = reader.nextInt();
 
             switch (opcion) {
                 case 1:
-                    solicitarDatos();
+                    requestData();
                     break;
                 case 2:
-                    System.out.println("\nLa cantidad total de platos vendidos en el dia fue de: "+calcularTotalPlatosVendidos());
+                    System.out.println("\nThe total number of plates sold during the day was: " + calcularTotalplatesVendidos());
                     break;
                 case 3:
-                    System.out.println("\nEl precio promedio de los platos vendidos en el dia fue de: "+calcularPrecioPromedio());
+                    System.out.println("\nThe average price of the plates sold during the day was: " + calcularPrecioaverage());
                     break;
                 case 4:
-                    System.out.println("\nLas ventas totales (dinero recaudado) durante el dia fueron: "+calcularVentasTotales());
+                    System.out.println("\nTotal sales (money collected) during the day were as follows: " + calculateSalesTotals());
                     break;
                 case 5:
-                    System.out.println("\nDigite el limite minimo de ventas a analizar");
+                    System.out.println("\nEnter the minimum sales limit to analyze");
                     double limite = reader.nextDouble();
-                    System.out.println("\nDe las "+precios.length+" referencias vendidas en el dia, "+consultarPlatosSobreLimite(limite)+" superaron el limite minimo de ventas de "+limite);
+                    System.out.println("\nOf the " + prices.length + " references sold during the day, " + consultplatesAboutLimit(limite) + " superaron el limite minimo de ventas de " + limite);
                     break;
                 case 6:
                     System.out.println("\nGracias por usar nuestros servicios!");
@@ -83,50 +73,78 @@ public class BurgerTown {
 
     }
 
+    public static void setQuantitySold() {
+
+        System.out.println("\nEnter the number of different plates sold during the day. ");
+        int plates = reader.nextInt();
+        prices = new double[plates];
+        units = new int[plates];
+
+    }
+
+    public static void requestData() {
+        for (int i = 0; i < prices.length; i++) {
+            System.out.println("\nEnter the price of the dish " + (i + 1));
+            prices[i] = reader.nextDouble();
+            System.out.println("Enter the quantity sold of the plate " + (i + 1));
+            units[i] = reader.nextInt();
+        }
+    }
+
+    public static int calcularTotalplatesVendidos() {
+        int quantityTotal = 0;
+        for (int unidad : units) {
+            quantityTotal += unidad;
+        }
+        return quantityTotal;
+    }
+
     /**
-     * Descripcion: Este metodo se encarga de preguntar al usuario el numero de platos diferentes 
-     * vendidos en el dia e inicializa con ese valor los arreglos encargados de almacenar precios y cantidades
-     * pre: El Scanner reader debe estar inicializado
-     * pre: Los arreglos precios y unidades deben estar declarados
-     * pos: Los arreglos precios y unidades quedan inicializados
+     * Descripcion: El metodo calcularPrecioaverage calcula el precio averages de los plates vendidos en el dia
+     * pre: Los arreglos prices y units deben estar inicializados
+     * pos: Retorna el precio average 
+     * @return El numero de average
      */
-    public static void establecerCantidadVendida() {
-
-        System.out.println("\nDigite el numero de platos diferentes vendidos en el dia ");
-        int platos = reader.nextInt();
-
-        precios = new double[platos];
-        unidades = new int[platos];
-
+    public static double calcularPrecioaverage() {
+        double priceTotal = 0;
+        int platesTotales = 0;
+        double average = 0;
+        for (int i = 0; i < prices.length; i++) {
+            priceTotal += prices[i] * units[i];
+            platesTotales += units[i];
+        }
+        average = priceTotal / platesTotales;
+        return average;
     }
 
-    public static void solicitarDatos(){
-
-     
+    /**
+     * Descripcion: El metodo calculateSalesTotals calcula las ventas totales hechas durante el dia 
+     * pre: Los arreglos prices y units deben estar inicializados
+     * pos: Retorna el total de ventas 
+     * @return El numero de salesTotals 
+     */
+    public static double calculateSalesTotals() {
+        double salesTotals = 0;
+        for (int i = 0; i < prices.length; i++) {
+            salesTotals += prices[i] * units[i];
+        }
+        return salesTotals;
     }
 
-    public static int calcularTotalPlatosVendidos(){
-
-        return 0;
-
+    /**
+     * Descripcion: El metodo consultplatesAboutLimit calcula cuales units se han pasado por el limite establecido por el usuario
+     * pre: Los arreglos prices y units deben estar inicializados
+     * pos: Retorna el número de plates que superan el límite mínimo de ventas
+     * @param limit El minimo de ventas dadas por el limite
+     * @return El numero plates que superan el limite 
+     */
+    public static int consultplatesAboutLimit(double limite) {
+        int counter = 0;
+        for (int i = 0; i < prices.length; i++) {
+            if (prices[i] * units[i] > limite) {
+                counter++;
+            }
+        }
+        return counter;
     }
-
-    public static double calcularPrecioPromedio(){
-
-        return 0;
-
-    }
-
-    public static double calcularVentasTotales(){
-
-        return 0;
-
-    }
-
-    public static int consultarPlatosSobreLimite(double limite){
-
-        return 0;
-
-    }
-
 }
